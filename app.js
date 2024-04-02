@@ -8,6 +8,7 @@ let textNumber = '';
 /*------------------------ Cached Element References ------------------------*/
 
 const buttons = document.querySelectorAll(".button")
+document.querySelector('.display').innerText = ''
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -25,8 +26,14 @@ buttons.forEach(btn => {
             console.log(numArr);
         } else if (e.target.innerText === '='){
             numArr.push(parseFloat(textNumber))
+            textNumber = ''
             operate(numArr[0], numArr[1], operator)
             console.log(numArr);
+        } else if (e.target.innerText === 'C'){
+            emptyArr(numArr)
+            textNumber = ''
+            document.querySelector('.display').innerText = ''
+            operator = ''
         }
     });
 });
@@ -36,16 +43,21 @@ buttons.forEach(btn => {
 
 const operate = (num1, num2, operator) => {
     emptyArr(numArr)
+    textNumber = ''
     if (operator === '+'){
-        numArr.push(num1 + num2)
+        // numArr.push(num1 + num2)
+        document.querySelector('.display').innerText = num1 + num2;
     } else if (operator === '-'){
-        numArr.push(num1 - num2)
+        // numArr.push(num1 - num2)
+        document.querySelector('.display').innerText = num1 - num2;
     } else if (operator === '*'){
-        numArr.push(num1 * num2)
+        // numArr.push(num1 * num2)
+        document.querySelector('.display').innerText = num1 * num2;
     } else if (operator === '/'){
-        numArr.push(num1 / num2)
+        // numArr.push(num1 / num2)
+        document.querySelector('.display').innerText = num1 / num2;
     }
-    document.querySelector('.display').innerText = numArr[0];
+    // document.querySelector('.display').innerText = numArr[0];
 }
 
 const emptyArr = (arr) => {

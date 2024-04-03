@@ -7,7 +7,6 @@ const numbersArray = []
 /*-------------------------------- Variables --------------------------------*/
 
 let operator = '';
-let textNumber = '';
 let displayNumberComplete = false
 
 /*------------------------ Cached Element References ------------------------*/
@@ -80,9 +79,13 @@ buttons.forEach(btn => {
 
         // C pushed
         } else if (e.target.innerText === 'C'){
+
             displayNumberComplete = false
+            
             display.innerText = ''
+            
             emptyArray(numbersArray)
+            
             operator = ''
 
             consolelog()

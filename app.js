@@ -15,7 +15,8 @@ let displayNumberComplete = false
 
 buttons.forEach(btn => {
     btn.addEventListener("click", (e) => {
-        // case number pushed
+        
+        // 6 pushed
         if (stringDigitsArray.includes(e.target.innerText)){
             
             if (displayNumberComplete === false){
@@ -27,16 +28,36 @@ buttons.forEach(btn => {
             }
 
             consolelog()
-        // case operator pushed
+        
+        // + pushed
         } else if (operators.includes(e.target.innerText)){
             
-            operator = e.target.innerText;
+            if (operator !== ''){
+                
+                numbersArray.push(parseFloat(display.innerText))
+            
+                display.innerText = operate(numbersArray[0], numbersArray[1], operator)
 
-            numbersArray.push(parseFloat(display.innerText))
+                emptyArray(numbersArray)
+
+                numbersArray.push(parseFloat(display.innerText))
+
+                displayNumberComplete = true;
+
+                operator = e.target.innerText;
             
-            displayNumberComplete = true;
+            } else {
+                
+                operator = e.target.innerText;
+
+                numbersArray.push(parseFloat(display.innerText))
+                
+                displayNumberComplete = true;
             
+            }
             consolelog()
+        
+        // = pushed
         } else if (e.target.innerText === '='){
             
             numbersArray.push(parseFloat(display.innerText))
@@ -46,6 +67,8 @@ buttons.forEach(btn => {
             emptyArray(numbersArray)
 
             displayNumberComplete = true;
+
+            operator = ''
 
             consolelog()
         } else if (e.target.innerText === 'C'){
@@ -85,4 +108,5 @@ const consolelog = () => {
     console.log('display: '+display.innerText);
     console.log('numbersArray: '+numbersArray);
     console.log('displayNumberComplete: '+displayNumberComplete);
+    console.log('operator: '+operator);
 }

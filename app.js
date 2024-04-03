@@ -1,39 +1,60 @@
 /*-------------------------------- Constants --------------------------------*/
-const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+const stringDigitsArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 const operators = ['+', '-', '*', '/']
-const numArr = []
+const numbersArray = []
 /*-------------------------------- Variables --------------------------------*/
 let operator = '';
 let textNumber = '';
 /*------------------------ Cached Element References ------------------------*/
 
 const buttons = document.querySelectorAll(".button")
-document.querySelector('.display').innerText = ''
+const display = document.querySelector('.display')
+let displayNumberComplete = false
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 buttons.forEach(btn => {
     btn.addEventListener("click", (e) => {
-        if (digits.includes(e.target.innerText)){
-            document.querySelector('.display').innerText = ''
-            textNumber += e.target.innerText;
-            document.querySelector('.display').innerText = textNumber;
-            console.log(numArr);
+        // case number pushed
+        if (stringDigitsArray.includes(e.target.innerText)){
+            
+            if (displayNumberComplete === false){
+                display.innerText += e.target.innerText
+            } else {
+                display.innerText = ''
+                display.innerText += e.target.innerText;
+                displayNumberComplete = false
+            }
+
+            consolelog()
+        // case operator pushed
         } else if (operators.includes(e.target.innerText)){
-            numArr.push(parseFloat(textNumber))
-            textNumber = ''
-            operator = e.target.innerText
-            console.log(numArr);
+            
+            operator = e.target.innerText;
+
+            numbersArray.push(parseFloat(display.innerText))
+            
+            displayNumberComplete = true;
+            
+            consolelog()
         } else if (e.target.innerText === '='){
-            numArr.push(parseFloat(textNumber))
-            textNumber = ''
-            operate(numArr[0], numArr[1], operator)
-            console.log(numArr);
+            
+            numbersArray.push(parseFloat(display.innerText))
+            
+            display.innerText = operate(numbersArray[0], numbersArray[1], operator)
+
+            emptyArray(numbersArray)
+
+            displayNumberComplete = true;
+
+            consolelog()
         } else if (e.target.innerText === 'C'){
-            emptyArr(numArr)
-            textNumber = ''
-            document.querySelector('.display').innerText = ''
+            displayNumberComplete = false
+            display.innerText = ''
+            emptyArray(numbersArray)
             operator = ''
+
+            consolelog()
         }
     });
 });
@@ -42,26 +63,26 @@ buttons.forEach(btn => {
 /*-------------------------------- Functions --------------------------------*/
 
 const operate = (num1, num2, operator) => {
-    emptyArr(numArr)
-    textNumber = ''
     if (operator === '+'){
-        // numArr.push(num1 + num2)
-        document.querySelector('.display').innerText = num1 + num2;
+        return num1 + num2;
     } else if (operator === '-'){
-        // numArr.push(num1 - num2)
-        document.querySelector('.display').innerText = num1 - num2;
+        return num1 - num2;
     } else if (operator === '*'){
-        // numArr.push(num1 * num2)
-        document.querySelector('.display').innerText = num1 * num2;
+        return num1 * num2;
     } else if (operator === '/'){
-        // numArr.push(num1 / num2)
-        document.querySelector('.display').innerText = num1 / num2;
+        return num1 / num2;
     }
-    // document.querySelector('.display').innerText = numArr[0];
 }
 
-const emptyArr = (arr) => {
+const emptyArray = (arr) => {
     while(arr.length > 0){
         arr.pop()
     }
+}
+
+const consolelog = () => {
+    console.clear()
+    console.log('display: '+display.innerText);
+    console.log('numbersArray: '+numbersArray);
+    console.log('displayNumberComplete: '+displayNumberComplete);
 }

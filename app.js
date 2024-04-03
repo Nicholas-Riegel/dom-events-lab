@@ -1,15 +1,19 @@
 /*-------------------------------- Constants --------------------------------*/
+
 const stringDigitsArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 const operators = ['+', '-', '*', '/']
 const numbersArray = []
+
 /*-------------------------------- Variables --------------------------------*/
+
 let operator = '';
 let textNumber = '';
+let displayNumberComplete = false
+
 /*------------------------ Cached Element References ------------------------*/
 
 const buttons = document.querySelectorAll(".button")
 const display = document.querySelector('.display')
-let displayNumberComplete = false
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -32,6 +36,7 @@ buttons.forEach(btn => {
         // + pushed
         } else if (operators.includes(e.target.innerText)){
             
+            // operator chaining
             if (operator !== ''){
                 
                 numbersArray.push(parseFloat(display.innerText))
@@ -46,6 +51,7 @@ buttons.forEach(btn => {
 
                 operator = e.target.innerText;
             
+            // no prior operator
             } else {
                 
                 operator = e.target.innerText;
@@ -71,6 +77,8 @@ buttons.forEach(btn => {
             operator = ''
 
             consolelog()
+
+        // C pushed
         } else if (e.target.innerText === 'C'){
             displayNumberComplete = false
             display.innerText = ''

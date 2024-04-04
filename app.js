@@ -2,12 +2,12 @@
 
 const stringDigitsArray = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 const operators = ['+', '-', '*', '/']
-const numbersArray = []
 
 /*-------------------------------- Variables --------------------------------*/
 
 let operator = '';
 let displayNumberComplete = false
+let numberInMemory = null;
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -38,13 +38,9 @@ buttons.forEach(btn => {
             // operator chaining
             if (operator !== ''){
                 
-                numbersArray.push(parseFloat(display.innerText))
-            
-                display.innerText = operate(numbersArray[0], numbersArray[1], operator)
+                display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
 
-                emptyArray(numbersArray)
-
-                numbersArray.push(parseFloat(display.innerText))
+                numberInMemory = parseFloat(display.innerText)
 
                 displayNumberComplete = true;
 
@@ -55,7 +51,7 @@ buttons.forEach(btn => {
                 
                 operator = e.target.innerText;
 
-                numbersArray.push(parseFloat(display.innerText))
+                numberInMemory = parseFloat(display.innerText)
                 
                 displayNumberComplete = true;
             
@@ -65,11 +61,9 @@ buttons.forEach(btn => {
         // = pushed
         } else if (e.target.innerText === '='){
             
-            numbersArray.push(parseFloat(display.innerText))
-            
-            display.innerText = operate(numbersArray[0], numbersArray[1], operator)
+            display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
 
-            emptyArray(numbersArray)
+            numberInMemory = null;
 
             displayNumberComplete = true;
 
@@ -84,7 +78,7 @@ buttons.forEach(btn => {
             
             display.innerText = ''
             
-            emptyArray(numbersArray)
+            numberInMemory = null;
             
             operator = ''
 
@@ -116,8 +110,8 @@ const emptyArray = (arr) => {
 
 const consolelog = () => {
     console.clear()
-    console.log('display: '+display.innerText);
-    console.log('numbersArray: '+numbersArray);
-    console.log('displayNumberComplete: '+displayNumberComplete);
-    console.log('operator: '+operator);
+    console.log('display: '+ display.innerText);
+    console.log('numberInmemory: '+ numberInMemory);
+    console.log('displayNumberComplete: '+ displayNumberComplete);
+    console.log('operator: '+ operator);
 }

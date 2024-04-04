@@ -19,76 +19,107 @@ const display = document.querySelector('.display')
 buttons.forEach(btn => {
     btn.addEventListener("click", (e) => {
         
-        // 6 pushed
+        // if number pressed
         if (stringDigitsArray.includes(e.target.innerText)){
             
-            if (displayNumberComplete === false){
-                display.innerText += e.target.innerText
-            } else {
-                display.innerText = ''
-                display.innerText += e.target.innerText;
-                displayNumberComplete = false
-            }
-
-            consolelog()
+            numberPressed(e)
+            
+            // consolelog()
         
-        // + pushed
+        // if operator pressed
         } else if (operators.includes(e.target.innerText)){
-            
-            // operator chaining
-            if (operator !== ''){
-                
-                display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
-
-                numberInMemory = parseFloat(display.innerText)
-
-                displayNumberComplete = true;
-
-                operator = e.target.innerText;
-            
-            // no prior operator
-            } else {
-                
-                operator = e.target.innerText;
-
-                numberInMemory = parseFloat(display.innerText)
-                
-                displayNumberComplete = true;
-            
-            }
-            consolelog()
         
-        // = pushed
+            operatorPressed(e)
+            
+            // consolelog()
+
+        // if equals pressed
         } else if (e.target.innerText === '='){
             
-            display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
+            equalsPressed(e)
+            
+            // consolelog()
 
-            numberInMemory = null;
-
-            displayNumberComplete = true;
-
-            operator = ''
-
-            consolelog()
-
-        // C pushed
+        // if C pressed
         } else if (e.target.innerText === 'C'){
 
-            displayNumberComplete = false
-            
-            display.innerText = ''
-            
-            numberInMemory = null;
-            
-            operator = ''
+            cPressed(e)
 
-            consolelog()
+            // consolelog()
         }
     });
 });
 
 
 /*-------------------------------- Functions --------------------------------*/
+
+const numberPressed = (e) => {
+    
+    // if displayNumberComplete is false
+    if (displayNumberComplete === false){
+    
+        display.innerText += e.target.innerText
+    
+    // if displayNumberComplete is true
+    } else {
+    
+        display.innerText = ''
+    
+        display.innerText += e.target.innerText;
+    
+        displayNumberComplete = false
+    }
+
+}
+
+const operatorPressed = (e) => {
+
+    // operator chaining
+    if (operator !== ''){
+        
+        display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
+
+        numberInMemory = parseFloat(display.innerText)
+
+        displayNumberComplete = true;
+
+        operator = e.target.innerText;
+    
+    // no prior operator
+    } else {
+        
+        operator = e.target.innerText;
+
+        numberInMemory = parseFloat(display.innerText)
+        
+        displayNumberComplete = true;
+    
+    }
+}
+
+const equalsPressed = (e) => {
+    
+    display.innerText = operate(parseFloat(numberInMemory), parseFloat(display.innerText), operator)
+
+    numberInMemory = null;
+
+    displayNumberComplete = true;
+
+    operator = ''
+
+}
+
+const cPressed = () => {
+    
+    displayNumberComplete = false
+            
+    display.innerText = ''
+    
+    numberInMemory = null;
+    
+    operator = ''
+
+}
 
 const operate = (num1, num2, operator) => {
     if (operator === '+'){
@@ -99,12 +130,6 @@ const operate = (num1, num2, operator) => {
         return num1 * num2;
     } else if (operator === '/'){
         return num1 / num2;
-    }
-}
-
-const emptyArray = (arr) => {
-    while(arr.length > 0){
-        arr.pop()
     }
 }
 
